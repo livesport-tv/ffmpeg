@@ -1,7 +1,58 @@
 variables:
-- group: videotoolsbuild-dockerhub
-- name: DOCKER
-  value: jrottenberg/ffmpeg
+  - group: dockerhub
 
 jobs:
-- template: docker-images/azure-jobs.yml
+  - job: build_snapshot_nvidia
+    steps:
+      - bash: |
+          docker build -t ${DOCKER}/ffmpeg:snapshot-nvidia1804 docker-images/snapshot/nvidia1804
+        displayName: Build docker image
+      - bash: |
+          docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+          docker push ${DOCKER}/ffmpeg:snapshot-nvidia1804
+        displayName: Push docker image
+  - job: build_4_3_1_nvidia
+    steps:
+      - bash: |
+          docker build -t ${DOCKER}/ffmpeg:4.3.1-nvidia1804 docker-images/4.3/nvidia1804
+        displayName: Build docker image
+      - bash: |
+          docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+          docker push ${DOCKER}/ffmpeg:4.3.1-nvidia1804
+        displayName: Push docker image
+  - job: build_4_2_4_nvidia
+    steps:
+      - bash: |
+          docker build -t ${DOCKER}/ffmpeg:4.2.4-nvidia1804 docker-images/4.2/nvidia1804
+        displayName: Build docker image
+      - bash: |
+          docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+          docker push ${DOCKER}/ffmpeg:4.2.4-nvidia1804
+        displayName: Push docker image
+  - job: build_snapshot_alpine
+    steps:
+      - bash: |
+          docker build -t ${DOCKER}/ffmpeg:snapshot-alpine311 docker-images/snapshot/alpine311
+        displayName: Build docker image
+      - bash: |
+          docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+          docker push ${DOCKER}/ffmpeg:snapshot-alpine311
+        displayName: Push docker image
+  - job: build_4_3_1_alpine
+    steps:
+      - bash: |
+          docker build -t ${DOCKER}/ffmpeg:4.3.1-alpine311 docker-images/4.3/alpine311
+        displayName: Build docker image
+      - bash: |
+          docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+          docker push ${DOCKER}/ffmpeg:4.3.1-alpine311
+        displayName: Push docker image
+  - job: build_4_2_4_alpine
+    steps:
+      - bash: |
+          docker build -t ${DOCKER}/ffmpeg:4.2.4-alpine311 docker-images/4.2/alpine311
+        displayName: Build docker image
+      - bash: |
+          docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+          docker push ${DOCKER}/ffmpeg:4.2.4-alpine311
+        displayName: Push docker image

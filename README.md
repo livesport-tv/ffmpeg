@@ -1,6 +1,15 @@
 # FFmpeg Docker image
 
- [![Docker Stars](https://img.shields.io/docker/stars/jrottenberg/ffmpeg.svg?style=plastic)](https://registry.hub.docker.com/v2/repositories/jrottenberg/ffmpeg/stars/count/) [![Docker pulls](https://img.shields.io/docker/pulls/jrottenberg/ffmpeg.svg?style=plastic)](https://registry.hub.docker.com/v2/repositories/jrottenberg/ffmpeg/)
+Livesport TV badges
+
+[![Build Status](https://dev.azure.com/devteam-livesporttv/ffmpeg/_apis/build/status/livesport-tv.ffmpeg?branchName=develop)](https://dev.azure.com/devteam-livesporttv/ffmpeg/_build/latest?definitionId=2&branchName=develop)
+
+Livesport TV [Dockerhub](https://hub.docker.com/repository/docker/livesporttv/ffmpeg)
+
+Rottenberg badges
+
+[![Docker Stars](https://img.shields.io/docker/stars/jrottenberg/ffmpeg.svg?style=plastic)](https://registry.hub.docker.com/v2/repositories/jrottenberg/ffmpeg/stars/count/)
+[![Docker pulls](https://img.shields.io/docker/pulls/jrottenberg/ffmpeg.svg?style=plastic)](https://registry.hub.docker.com/v2/repositories/jrottenberg/ffmpeg/)
 [![gitlab pipeline status](https://gitlab.com/jrottenberg/ffmpeg/badges/master/pipeline.svg)](https://gitlab.com/jrottenberg/ffmpeg/commits/master)
 [![Azure Build Status](https://dev.azure.com/video-tools/ffmpeg/_apis/build/status/jrottenberg.ffmpeg)](https://dev.azure.com/video-tools/ffmpeg/_build/latest?definitionId=1)
 [![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg?maxAge=2592000?style=plastic)](https://github.com/jrottenberg/ffmpeg/)

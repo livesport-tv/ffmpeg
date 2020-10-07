@@ -21,7 +21,7 @@ You can install the latest build of this image by running `docker pull jrottenbe
 This image can be used as a base for an encoding farm.
 
 ## Builds
-
+.
 You can use jrottenberg/ffmpeg or jrottenberg/ffmpeg:3.3
 to get the latest build based on ubuntu.
 

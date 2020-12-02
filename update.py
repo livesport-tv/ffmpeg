@@ -7,7 +7,7 @@ import shutil
 from urllib import request
 from distutils.version import StrictVersion
 
-MIN_VERSION = "2.7"
+MIN_VERSION = "4.3"
 with open("templates/Dockerfile-env", "r") as tmpfile:
     ENV_CONTENT = tmpfile.read()
 with open("templates/Dockerfile-run", "r") as tmpfile:
@@ -19,18 +19,8 @@ TEMPLATE_STR = "templates/Dockerfile-template.{0}"
 # https://ffmpeg.org/olddownload.html
 SKIP_VERSIONS = "3.1.11 3.0.12"
 VARIANTS = [
-    {"name": "ubuntu1604", "parent": "ubuntu"},
-    {"name": "ubuntu1804", "parent": "ubuntu"},
-    {"name": "alpine311", "parent": "alpine"},
-    {"name": "alpine38", "parent": "alpine"},
-    {"name": "centos7", "parent": "centos"},
-    {"name": "centos8", "parent": "centos"},
-    {"name": "scratch311", "parent": "scratch"},
-    {"name": "scratch38", "parent": "scratch"},
-    {"name": "vaapi1804", "parent": "vaapi"},
-    {"name": "vaapi1604", "parent": "vaapi"},
+    {"name": "alpine311",  "parent": "alpine"},
     {"name": "nvidia1804", "parent": "nvidia"},
-    {"name": "nvidia1604", "parent": "nvidia"},
 ]
 FFMPEG_RELEASES = "https://ffmpeg.org/releases/"
 gitlabci = []

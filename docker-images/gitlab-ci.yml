@@ -1,4 +1,15 @@
 
+snapshot-ubuntu2004-vmaf:
+  extends: .docker
+  stage: ubuntu2004-vmaf
+  variables:
+    MAJOR_VERSION: snapshot
+    VERSION: "snapshot"
+    LONG_VERSION: "snapshot"
+    VARIANT: ubuntu2004-vmaf
+    PARENT: "ubuntu"
+    ISPARENT: "True"
+
 snapshot-alpine311:
   extends: .docker
   stage: alpine311
@@ -19,6 +30,17 @@ snapshot-nvidia1804:
     LONG_VERSION: "snapshot"
     VARIANT: nvidia1804
     PARENT: "nvidia"
+    ISPARENT: "True"
+
+4.3.1-ubuntu2004-vmaf:
+  extends: .docker
+  stage: ubuntu2004-vmaf
+  variables:
+    MAJOR_VERSION: 4
+    VERSION: "4.3"
+    LONG_VERSION: "4.3.1"
+    VARIANT: ubuntu2004-vmaf
+    PARENT: "ubuntu"
     ISPARENT: "True"
 
 4.3.1-alpine311:

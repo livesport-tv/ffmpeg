@@ -7,6 +7,15 @@ jobs:
     maxParallel: 10
     matrix:
 
+      ubuntu2004-vmaf_snapshot:
+        MAJOR_VERSION: snapshot
+        VERSION:  snapshot
+        LONG_VERSION: snapshot
+        VARIANT:  ubuntu2004-vmaf
+        PARENT: ubuntu
+        ISPARENT:  True
+
+
       alpine311_snapshot:
         MAJOR_VERSION: snapshot
         VERSION:  snapshot
@@ -22,6 +31,15 @@ jobs:
         LONG_VERSION: snapshot
         VARIANT:  nvidia1804
         PARENT: nvidia
+        ISPARENT:  True
+
+
+      ubuntu2004-vmaf_4.3.1:
+        MAJOR_VERSION: 4
+        VERSION:  4.3
+        LONG_VERSION: 4.3.1
+        VARIANT:  ubuntu2004-vmaf
+        PARENT: ubuntu
         ISPARENT:  True
 
 

@@ -19,8 +19,9 @@ TEMPLATE_STR = "templates/Dockerfile-template.{0}"
 # https://ffmpeg.org/olddownload.html
 SKIP_VERSIONS = "3.1.11 3.0.12"
 VARIANTS = [
-    {"name": "alpine311",  "parent": "alpine"},
-    {"name": "nvidia1804", "parent": "nvidia"},
+    {"name": "ubuntu2004-vmaf",  "parent": "ubuntu"},
+    {"name": "alpine311",        "parent": "alpine"},
+    {"name": "nvidia1804",       "parent": "nvidia"},
 ]
 FFMPEG_RELEASES = "https://ffmpeg.org/releases/"
 gitlabci = []

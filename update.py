@@ -21,6 +21,7 @@ SKIP_VERSIONS = "3.1.11 3.0.12"
 VARIANTS = [
     {"name": "ubuntu1604", "parent": "ubuntu"},
     {"name": "ubuntu1804", "parent": "ubuntu"},
+    {"name": "ubuntu2004-vmaf", "parent": "ubuntu"},
     {"name": "alpine311", "parent": "alpine"},
     {"name": "alpine38", "parent": "alpine"},
     {"name": "centos7", "parent": "centos"},

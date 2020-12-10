@@ -1,0 +1,88 @@
+# ffmpeg - http://ffmpeg.org/download.html
+#
+# From https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
+
+FROM        ubuntu:20.04 AS base
+
+WORKDIR     /tmp/workdir
+
+RUN     apt-get -yqq update && apt-get -yqq upgrade && \
+        apt-get install -yq --no-install-recommends ca-certificates expat libgomp1 && \
+        apt-get autoremove -y && \
+        apt-get clean -y
+
+FROM base as build
+
+ENV         %%ENV%%
+
+RUN  buildDeps="\
+	nasm yasm meson pkg-config libx264-dev libx265-dev build-essential \
+	git \
+	curl \
+	bzip2 \
+	libssl-dev \
+	zlib1g-dev" && \
+        apt-get -yqq update && \
+        apt-get install -yq --no-install-recommends ${buildDeps}
+
+## ffmpeg https://ffmpeg.org/
+RUN  \
+        DIR=/tmp/ffmpeg && mkdir -p ${DIR} && cd ${DIR} && \
+        curl -sLO https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
+        tar -jx --strip-components=1 -f ffmpeg-${FFMPEG_VERSION}.tar.bz2
+
+## VAMF
+RUN \
+	DIR=/tmp/vmaf && mkdir -p ${DIR} && cd ${DIR} && \
+	git clone -b v1.5.3 https://github.com/Netflix/vmaf && \
+	cd vmaf/libvmaf && \
+	meson build --buildtype release --prefix="${PREFIX}" --libdir /opt/ffmpeg/lib && \
+	ninja -vC build install
+
+RUN ls -R /opt/ffmpeg/
+
+RUN \
+        DIR=/tmp/ffmpeg && mkdir -p ${DIR} && cd ${DIR} && \
+        ./configure \
+	--prefix="${PREFIX}" \
+        --extra-cflags="-I${PREFIX}/include" \
+        --extra-ldflags="-L${PREFIX}/lib" \
+	--disable-debug \
+	--disable-doc \
+	--disable-ffplay \
+	--disable-ffprobe \
+        --enable-shared \
+	--enable-gpl \
+	--enable-version3 \
+	--enable-libvmaf \
+	--enable-libx264 \
+	--enable-libx265 && \
+        make && \
+        make install && \
+        make distclean && \
+        hash -r
+
+## cleanup
+RUN \
+        ldd ${PREFIX}/bin/ffmpeg | grep opt/ffmpeg | cut -d ' ' -f 3 | xargs -i cp {} /usr/local/lib/ && \
+        for lib in /usr/local/lib/*.so.*; do ln -s "${lib##*/}" "${lib%%.so.*}".so; done && \
+        cp ${PREFIX}/bin/* /usr/local/bin/ && \
+        cp -r ${PREFIX}/share/ffmpeg /usr/local/share/ && \
+        LD_LIBRARY_PATH=/usr/local/lib ffmpeg -buildconf && \
+        cp -r ${PREFIX}/include/libav* ${PREFIX}/include/libpostproc ${PREFIX}/include/libsw* /usr/local/include && \
+        mkdir -p /usr/local/lib/pkgconfig && \
+        for pc in ${PREFIX}/lib/pkgconfig/libav*.pc ${PREFIX}/lib/pkgconfig/libpostproc.pc ${PREFIX}/lib/pkgconfig/libsw*.pc; do \
+          sed "s:${PREFIX}:/usr/local:g" <"$pc" >/usr/local/lib/pkgconfig/"${pc##*/}"; \
+        done
+
+FROM        base AS release
+
+RUN         apt install -yqq libx264-155 libx265-179
+
+ENV         LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
+
+CMD         ["--help"]
+ENTRYPOINT  ["ffmpeg"]
+
+COPY --from=build /usr/local /usr/local/
+COPY --from=build /opt/ffmpeg/share/model /usr/local/share/model

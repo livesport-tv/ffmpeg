@@ -11,6 +11,15 @@ jobs:
           docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
           docker push ${DOCKER}/ffmpeg:snapshot-nvidia1804
         displayName: Push docker image
+  - job: build_4_3_1_vmaf
+    steps:
+      - bash: |
+          docker build -t ${DOCKER}/ffmpeg:4.3.1-ubuntu2004-vmaf docker-images/4.3/ubuntu2004-vmaf
+        displayName: Build docker image
+      - bash: |
+          docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+          docker push ${DOCKER}/ffmpeg:4.3.1-ubuntu2004-vmaf
+        displayName: Push docker image
   - job: build_4_3_1_nvidia
     steps:
       - bash: |
